@@ -5007,6 +5007,7 @@ export class Parser {
                 let $scope$name: Nullable<string>;
                 let $$res: Nullable<LabelDeclaration> = null;
                 if (true
+                    && this.match_($$dpth + 1, $$cr) !== null
                     && this.negate(() => this.matchForbiddenLabel($$dpth + 1, $$cr)) !== null
                     && ($scope$pos = this.mark()) !== null
                     && ($scope$name = this.regexAccept(String.raw`(?:[a-z_][a-z0-9_!\?#@\.\$]*)`, "", $$dpth + 1, $$cr)) !== null

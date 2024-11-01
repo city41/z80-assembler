@@ -208,7 +208,7 @@ Label :=
 
 // A label declaration can't have a forbidden name. It is a name optionally followed by a ':' character.
 LabelDeclaration :=
-    !ForbiddenLabel pos=@ name='[a-z_][a-z0-9_!\?#@\.\$]*' '\:'?
+    _ !ForbiddenLabel pos=@ name='[a-z_][a-z0-9_!\?#@\.\$]*' '\:'?
 
 
 // An expression is a bitwise OR expression
