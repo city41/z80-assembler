@@ -194,7 +194,7 @@ ForbiddenNames :=
     'byte|call|cpdr|cpir|defb|defm|defs|defw|djnz|eq|halt|indr|inir|lddr|ldir|otdr|otir|outd|outi|push|reti|retn|rlca|rrca|word' |
     'adc|add|and|bit|ccf|cpd|cpi|cpl|daa|dec|exx|inc|ind|ini|ldd|ldi|neg|nop|org|out|pop|res|ret|rla' |
     'rlc|rld|rra|rrc|rrd|rst|sbc|scf|set|sla|sra|srl|sub|xor' |
-    'cp|db|di|dm|ds|dw|ei|eq|ex|im|in|jp|jr|ld|or|rl|rr'
+    'cp|\.?db|di|dm|\.?ds|\.?dw|ei|eq|ex|im|in|jp|jr|ld|or|rl|rr'
 
 // A forbidden label is a name not allowed for a label followed by a space, a tabulation, the character ':' or an end of line.
 ForbiddenLabel :=
@@ -1138,15 +1138,15 @@ OutputInstruction :=
 
 // Byte directive
 ByteDirective :=
-    'db' | 'dm' | 'byte' | 'defb' | 'defm'
+    '\.?db' | 'dm' | 'byte' | 'defb' | 'defm'
 
 // Word directive
 WordDirective :=
-    'dw' | 'word' | 'defw'
+    '\.?dw' | 'word' | 'defw'
 
 // Block directive
 BlockDirective :=
-    'block' | 'defs' | 'ds'
+    'block' | 'defs' | '\.?ds'
 
 // A Byte directive contains either characters, strings, or expressions
 ByteValue :=
