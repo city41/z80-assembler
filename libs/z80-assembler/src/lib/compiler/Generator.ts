@@ -174,6 +174,7 @@ function generateLines(address: number, infos: LinesInfo[]): GenerationData {
       // If it is not a statement, take the next line.
       // Si ce n'est pas une déclaration, on passe à la ligne suivante,
       if (line.kind !== ASTKinds.LineStatement || !line.statement) {
+        sld += generateSld(info.filename, lineNumber, address, line);
         lineNumber += 1; // Next line
         continue;
       }
