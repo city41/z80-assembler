@@ -637,6 +637,7 @@ export enum ASTKinds {
     Comment = "Comment",
     OriginDirective = "OriginDirective",
     AreaDirective = "AreaDirective",
+    EvenDirective = "EvenDirective",
     Filename_1 = "Filename_1",
     Filename_2 = "Filename_2",
     IncludeDirective = "IncludeDirective",
@@ -872,6 +873,7 @@ export interface LineStatement {
     statement: Nullable<Statement>;
     comment: Nullable<Comment>;
     area: Nullable<AreaDirective>;
+    even: Nullable<EvenDirective>;
 }
 export type Statement = Statement_1 | Statement_2 | Statement_3;
 export class Statement_1 {
@@ -4176,6 +4178,7 @@ export interface OriginDirective {
     address: nn;
 }
 export type AreaDirective = string;
+export type EvenDirective = string;
 export type Filename = Filename_1 | Filename_2;
 export interface Filename_1 {
     kind: ASTKinds.Filename_1;
@@ -4804,6 +4807,7 @@ export class Parser {
                 let $scope$statement: Nullable<Nullable<Statement>>;
                 let $scope$comment: Nullable<Nullable<Comment>>;
                 let $scope$area: Nullable<Nullable<AreaDirective>>;
+                let $scope$even: Nullable<Nullable<EvenDirective>>;
                 let $$res: Nullable<LineStatement> = null;
                 if (true
                     && (($scope$label = this.matchLabelDeclaration($$dpth + 1, $$cr)) || true)
@@ -4813,9 +4817,11 @@ export class Parser {
                     && (($scope$comment = this.matchComment($$dpth + 1, $$cr)) || true)
                     && this.match_($$dpth + 1, $$cr) !== null
                     && (($scope$area = this.matchAreaDirective($$dpth + 1, $$cr)) || true)
+                    && this.match_($$dpth + 1, $$cr) !== null
+                    && (($scope$even = this.matchEvenDirective($$dpth + 1, $$cr)) || true)
                     && this.matcheol($$dpth + 1, $$cr) !== null
                 ) {
-                    $$res = {kind: ASTKinds.LineStatement, label: $scope$label, statement: $scope$statement, comment: $scope$comment, area: $scope$area};
+                    $$res = {kind: ASTKinds.LineStatement, label: $scope$label, statement: $scope$statement, comment: $scope$comment, area: $scope$area, even: $scope$even};
                 }
                 return $$res;
             });
@@ -12188,6 +12194,9 @@ export class Parser {
     }
     public matchAreaDirective($$dpth: number, $$cr?: ErrorTracker): Nullable<AreaDirective> {
         return this.regexAccept(String.raw`(?:\.?area[^\r\n]*)`, "", $$dpth + 1, $$cr);
+    }
+    public matchEvenDirective($$dpth: number, $$cr?: ErrorTracker): Nullable<EvenDirective> {
+        return this.regexAccept(String.raw`(?:\.?even[^\r\n]*)`, "", $$dpth + 1, $$cr);
     }
     public matchFilename($$dpth: number, $$cr?: ErrorTracker): Nullable<Filename> {
         return this.choice<Filename>([

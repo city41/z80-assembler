@@ -152,8 +152,9 @@ LineEqual :=
 
 // A line with a statement is an optional label, followed by a statement, an optional comment and an end of line.
 // HACK: a line can also be the asz80 .area directive, which will be ignored, just like it's a comment
+// HACK: a line can also be the asz80 .even directive, which will be ignored, just like it's a comment
 LineStatement :=
-  label=LabelDeclaration? _ statement=Statement? _ comment=Comment? _ area=AreaDirective? eol
+  label=LabelDeclaration? _ statement=Statement? _ comment=Comment? _ area=AreaDirective? _ even=EvenDirective? eol
 
 // A statement is either an include, an instruction or a directive
 Statement :=
@@ -1229,6 +1230,13 @@ OriginDirective :=
 // both assemble from the same source
 AreaDirective :=
     '\.?area[^\r\n]*'
+
+// An Even directive is '.even'
+// this directive is used by asz80 and not supported by z80-assembler
+// it will treat it like a comment and move on, allowing z80-assember and asz80 to
+// both assemble from the same source
+EvenDirective :=
+    '\.?even[^\r\n]*'
 
 // A filename is optionally enclosed in double-quotes and contains a subset of characters.
 Filename :=
