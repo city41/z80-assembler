@@ -4878,7 +4878,7 @@ export class Parser {
                 let $scope$e: Nullable<Expression>;
                 let $$res: Nullable<EqualDirective> = null;
                 if (true
-                    && this.regexAccept(String.raw`(?:\.?equ|eq)`, "", $$dpth + 1, $$cr) !== null
+                    && this.regexAccept(String.raw`(?:\.?equ|eq|=)`, "", $$dpth + 1, $$cr) !== null
                     && this.match__($$dpth + 1, $$cr) !== null
                     && ($scope$e = this.matchExpression($$dpth + 1, $$cr)) !== null
                 ) {
