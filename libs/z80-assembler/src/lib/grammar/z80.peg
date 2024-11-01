@@ -104,21 +104,21 @@ nn :=
 
 // A decimal unsigned value with the different allowed syntaxes
 decimal :=
-    raw='[0-9]+' 'd'?
+    '#'? raw= '[0-9]+' 'd'?
 
 // A binary value with the different allowed syntaxes
 binary :=
-    {'0b' | '%'} raw='[0-1]+'
+    '#'? {'0b' | '%'} raw='[0-1]+'
 
 // An octal value with the different allowed syntaxes
 octal :=
-    {'0q' | '0o'} raw='[0-7]+' |
-    raw='[0-7]+' {'q' | 'o'}
+    '#'? {'0q' | '0o'} raw='[0-7]+' |
+    '#'? raw='[0-7]+' {'q' | 'o'}
 
 // An hexadecimal value with the different allowed syntaxes
 hexadecimal :=
-    {'0x' | '\$' | '#'} raw='[0-9a-f]+' |
-    raw='[0-9][0-9a-f]?' 'h'
+    '#'? {'0x' | '\$' } raw='[0-9a-f]+' |
+    '#'? raw='[0-9][0-9a-f]?' 'h'
 
 // Different names used in the Z80 CPU User Manual for 8-bit values
 d := n
@@ -168,9 +168,9 @@ Statement :=
     .elements = AstElements { return dir.elements; }
     .address = Address { return dir.address; }
 
-// An equality directive is 'equ' (or an alias) followed by an expression
+// An equality directive is '=' followed by an expression
 EqualDirective :=
-    '\.?equ|eq|=' __ e=Expression
+    '=' _ e=Expression
 
 // A directive is either a data directive, an origin directive, an output directive or a device directive
 Directive :=

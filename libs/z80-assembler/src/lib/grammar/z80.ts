@@ -129,7 +129,6 @@ export enum ASTKinds {
     hexadecimal_2 = "hexadecimal_2",
     hexadecimal_$0_1 = "hexadecimal_$0_1",
     hexadecimal_$0_2 = "hexadecimal_$0_2",
-    hexadecimal_$0_3 = "hexadecimal_$0_3",
     d = "d",
     e = "e",
     p = "p",
@@ -820,10 +819,9 @@ export interface hexadecimal_2 {
     kind: ASTKinds.hexadecimal_2;
     raw: string;
 }
-export type hexadecimal_$0 = hexadecimal_$0_1 | hexadecimal_$0_2 | hexadecimal_$0_3;
+export type hexadecimal_$0 = hexadecimal_$0_1 | hexadecimal_$0_2;
 export type hexadecimal_$0_1 = string;
 export type hexadecimal_$0_2 = string;
-export type hexadecimal_$0_3 = string;
 export type d = n;
 export type e = n;
 export type p = n;
@@ -4529,6 +4527,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<decimal> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-9]+)`, "", $$dpth + 1, $$cr)) !== null
                     && ((this.regexAccept(String.raw`(?:d)`, "", $$dpth + 1, $$cr)) || true)
                 ) {
@@ -4543,6 +4542,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<binary> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && this.matchbinary_$0($$dpth + 1, $$cr) !== null
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-1]+)`, "", $$dpth + 1, $$cr)) !== null
                 ) {
@@ -4575,6 +4575,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<octal_1> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && this.matchoctal_$0($$dpth + 1, $$cr) !== null
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-7]+)`, "", $$dpth + 1, $$cr)) !== null
                 ) {
@@ -4589,6 +4590,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<octal_2> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-7]+)`, "", $$dpth + 1, $$cr)) !== null
                     && this.matchoctal_$1($$dpth + 1, $$cr) !== null
                 ) {
@@ -4633,6 +4635,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<hexadecimal_1> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && this.matchhexadecimal_$0($$dpth + 1, $$cr) !== null
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-9a-f]+)`, "", $$dpth + 1, $$cr)) !== null
                 ) {
@@ -4647,6 +4650,7 @@ export class Parser {
                 let $scope$raw: Nullable<string>;
                 let $$res: Nullable<hexadecimal_2> = null;
                 if (true
+                    && ((this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr)) || true)
                     && ($scope$raw = this.regexAccept(String.raw`(?:[0-9][0-9a-f]?)`, "", $$dpth + 1, $$cr)) !== null
                     && this.regexAccept(String.raw`(?:h)`, "", $$dpth + 1, $$cr) !== null
                 ) {
@@ -4659,7 +4663,6 @@ export class Parser {
         return this.choice<hexadecimal_$0>([
             () => this.matchhexadecimal_$0_1($$dpth + 1, $$cr),
             () => this.matchhexadecimal_$0_2($$dpth + 1, $$cr),
-            () => this.matchhexadecimal_$0_3($$dpth + 1, $$cr),
         ]);
     }
     public matchhexadecimal_$0_1($$dpth: number, $$cr?: ErrorTracker): Nullable<hexadecimal_$0_1> {
@@ -4667,9 +4670,6 @@ export class Parser {
     }
     public matchhexadecimal_$0_2($$dpth: number, $$cr?: ErrorTracker): Nullable<hexadecimal_$0_2> {
         return this.regexAccept(String.raw`(?:\$)`, "", $$dpth + 1, $$cr);
-    }
-    public matchhexadecimal_$0_3($$dpth: number, $$cr?: ErrorTracker): Nullable<hexadecimal_$0_3> {
-        return this.regexAccept(String.raw`(?:#)`, "", $$dpth + 1, $$cr);
     }
     public matchd($$dpth: number, $$cr?: ErrorTracker): Nullable<d> {
         return this.matchn($$dpth + 1, $$cr);
@@ -4878,8 +4878,8 @@ export class Parser {
                 let $scope$e: Nullable<Expression>;
                 let $$res: Nullable<EqualDirective> = null;
                 if (true
-                    && this.regexAccept(String.raw`(?:\.?equ|eq|=)`, "", $$dpth + 1, $$cr) !== null
-                    && this.match__($$dpth + 1, $$cr) !== null
+                    && this.regexAccept(String.raw`(?:=)`, "", $$dpth + 1, $$cr) !== null
+                    && this.match_($$dpth + 1, $$cr) !== null
                     && ($scope$e = this.matchExpression($$dpth + 1, $$cr)) !== null
                 ) {
                     $$res = {kind: ASTKinds.EqualDirective, e: $scope$e};
