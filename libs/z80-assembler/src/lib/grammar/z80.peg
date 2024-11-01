@@ -151,8 +151,9 @@ LineEqual :=
   label=LabelDeclaration _ equal=EqualDirective _ comment=Comment? eol
 
 // A line with a statement is an optional label, followed by a statement, an optional comment and an end of line.
+// HACK: a line can also be the asz80 .area directive, which will be ignored, just like it's a comment
 LineStatement :=
-  label=LabelDeclaration? _ statement=Statement? _ comment=Comment? eol
+  label=LabelDeclaration? _ statement=Statement? _ comment=Comment? _ area=AreaDirective? eol
 
 // A statement is either an include, an instruction or a directive
 Statement :=
@@ -186,7 +187,7 @@ Directive :=
 
     directive=DeviceDirective
     .elements = AstElements { return []; }
-    .address = Address { return null; }
+    .address = Address { return null; } 
 
 // Names not allowed for a label
 ForbiddenNames :=
@@ -1221,6 +1222,13 @@ Comment :=
 // An Origin directive is 'org' (or an alias) followed by a 16-bit value and the end of the statement
 OriginDirective :=
     '\.?org' __ address=nn
+
+// An Area directive is '.area' followed by parameters like "(CODE) ABS"
+// this directive is used by asz80 and not needed by z80-assembler
+// it will treat it like a comment and move on, allowing z80-assember and asz80 to
+// both assemble from the same source
+AreaDirective :=
+    '\.?area[^\r\n]*'
 
 // A filename is optionally enclosed in double-quotes and contains a subset of characters.
 Filename :=
