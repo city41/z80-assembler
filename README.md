@@ -1,3 +1,14 @@
+## To publish a new version
+
+First build it with `yarn nx run z80-assembler:build`. Then once built, `cd dist/libs/z80-assembler && yarn publish`
+
+## To update the code after a grammar change
+
+- Change the grammar in `libs/z80-assembler/src/lib/grammar/z80.peg`
+- From the root: `yarn nx run z80-assembler:'compile grammar'`
+
+original README below...
+
 # z80-assembler
 
 ![Z80](assets/images/logo.png)
@@ -31,12 +42,6 @@ Notes:
 ```
 nx run z80-assembler-app:dev:production
 ```
-
-## To publish a new version
-
-First build it with `yarn nx run z80-assembler:build`. Then once built, `cd dist/libs/z80-assembler && yarn publish`
-
-original README below...
 
 Open a navigator at the URL http://localhost:4200/
 
