@@ -33,7 +33,7 @@ import {
 
 import {
   parseNumber,
-  parseZX81Char,
+  parseCharToAscii,
   parseSimpleEscape,
   parseOctalEscape,
   parseHexadecimalEscape} from './Parse';
@@ -192,7 +192,7 @@ Directive :=
 
 // Names not allowed for a label
 ForbiddenNames :=
-    'block|.\?equ|\.?org|\.?include|\.?output|\.?device' |
+    'block|.\?equ|\.?org|\.?include|\.?output|\.?device|\.?ascii' |
     'byte|call|cpdr|cpir|defb|defm|defs|defw|djnz|eq|halt|indr|inir|lddr|ldir|otdr|otir|outd|outi|push|reti|retn|rlca|rrca|word' |
     'adc|add|and|bit|ccf|cpd|cpi|cpl|daa|dec|exx|inc|ind|ini|ldd|ldi|neg|nop|org|out|pop|res|ret|rla' |
     'rlc|rld|rra|rrc|rrd|rst|sbc|scf|set|sla|sra|srl|sub|xor' |
@@ -1140,7 +1140,7 @@ OutputInstruction :=
 
 // Byte directive
 ByteDirective :=
-    '\.?db' | 'dm' | 'byte' | 'defb' | 'defm'
+    '\.?db' | 'dm' | 'byte' | 'defb' | 'defm' | '\.?ascii'
 
 // Word directive
 WordDirective :=
@@ -1198,12 +1198,12 @@ HexadecimalEscapeSequence :=
 // A simple character is not a quote, a backslash or a newline
 SimpleChar :=
     pos=@ raw='[^\'\\\n]'
-    .elements = AstElements { return parseZX81Char(pos, raw); }
+    .elements = AstElements { return parseCharToAscii(pos, raw); }
 
 // A string character is not a double-quote, a backslash or a newline
 StringChar :=
     pos=@ raw='[^\"\\\n]'
-    .elements = AstElements { return parseZX81Char(pos, raw); }
+    .elements = AstElements { return parseCharToAscii(pos, raw); }
 
 // A character literal is enclosed in quotes and is either a simple character or an escape sequence
 Char :=
@@ -1214,7 +1214,6 @@ Char :=
 Str :=
     '\"' pos=@ chars={StringChar | EscapeSequence}* '\"'
     .elements = AstElements { return chars.reduce((r, c) => { return r.concat(c.elements); }, [] as AstElements); }
-
 
 // A comment starts with '//' or ';' and goes until the end of the statement
 Comment :=
